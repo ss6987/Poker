@@ -1,0 +1,67 @@
+@startuml
+title ポーカー(クラス図)
+
++class CardType{
+    -int number;
+    -int mark;
+    + int getNumber()
+    +int getMark()
+    +String getMarkString()
+}
+
++class DeckType{
+    -CardType[] cardArray
+    -int address = 0
+    -boolean checkDeck(int purpose)
+    +CardType drawCard()
+}
+
++class HandJudgeType{
+    -int handRanking
+    -int highCard
+    -Boolean judgeRoyalStraightFlush(CardType card[])
+    -Boolean judgeStraightFlush(CardType card[])
+    -Boolean judgeFourOfAKind(CardType card[])
+    -Boolean judgeFullHouse(CardType card[])
+    -Boolean judgeFlush(CardType card[])
+    -Boolean judgeStraight(CardType card[])
+    -Boolean judgeThreeOfAKind(CardType card[])
+    -Boolean judgeTwoPair(CardType card[])
+    -Boolean judgeOnePair(CardType card[])
+    +int getHandRanking()
+    +int getHighCard()
+    +String pokerRankingString()
+}
+
++class HandType{
+    CardType[5] hand
+    +CardType getHand(int number)
+    +void changeHandCard(DeckType deck,int[] request)
+
+}
+
++class PlayerType{
+    -HandCard hand
+    -HandJudgeType judgeResult
+    +void drawHand(DeckType deck,int[] Request)
+    +void judgeHand()
+    +HandType getHand()
+    +HandJudgeType getJudgeResult()
+}
+
++class PokerServer{
+    -static DeckType deck
+    -static ArrayList<PlayerType> player
+    +static void main(String[] args)
+    -static void createPlayer()
+    -static void changeCard()
+}
+
+PokerServer "1" o-down-> "*" PlayerType
+PokerServer "1" o-down-> "1" DeckType
+PlayerType "1" o-down-> "1" HandType
+PlayerType "1" o-down-> "1" HandJudgeType
+HandType "1" o-down-> "*" CardType
+DeckType "1" o-down-> "*" CardType
+
+@enduml
