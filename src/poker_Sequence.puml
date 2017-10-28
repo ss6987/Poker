@@ -1,0 +1,42 @@
+@startuml
+box "複数存在" #LightBlue
+    actor ユーザー as user
+    participant PokerClient as client
+end box
+participant PokerServer as server
+participant PlayerType
+
+user -> client : サーバのIPアドレスを入力
+activate user
+activate client
+activate server
+client -> user : 画面更新
+user -> client : 他のプレイヤーを追加するか選択
+deactivate user
+loop プレイヤーを追加しないを選ぶか5人になるまで
+client -> server : プレイヤーの追加
+create PlayerType
+server -> PlayerType : <作成>
+activate PlayerType
+PlayerType -> server : 手札
+deactivate PlayerType
+end
+server -> client : 手札
+client -> user : 手札表示
+activate user
+user -> client : 入れ替える手札を入力
+deactivate user
+loop プレイヤーの人数分だけ繰り返す
+client -> server :　RequestTypeにして送信
+server -> PlayerType : RequestTypeを送信
+activate PlayerType
+PlayerType -> server : 入れ替え後の手札
+deactivate PlayerType
+server -> client : 入れ替え後手札を送信
+client -> user : 入れ替え後の手札を表示
+end
+server -> client : 全プレイヤーの手札を送信
+deactivate server
+
+deactivate client
+@enduml

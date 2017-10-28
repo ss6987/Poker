@@ -1,14 +1,10 @@
 import java.io.*;
 import java.net.Socket;
 
-/**
- * Created by SS on 2016/12/20.
- */
 public class CommunicationSet {
-
-    private static Socket socket;
-    private static ObjectOutputStream oos;
-    private static ObjectInputStream ois;
+    private Socket socket = new Socket();
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
 
     public CommunicationSet(Socket socket) throws IOException {
         this.socket = socket;
@@ -16,20 +12,16 @@ public class CommunicationSet {
         ois = new ObjectInputStream(this.socket.getInputStream());
     }
 
-    public void authorization(boolean flag){
-        try {
-            oos.writeBoolean(flag);
-            oos.flush();
-        }catch (IOException e){
-            System.out.println(e);
-        }
+    public Socket getSocket() {
+        return this.socket;
     }
 
-    public ObjectOutputStream getOos(){
+    public ObjectOutputStream getOos() {
         return this.oos;
     }
 
-    public ObjectInputStream getOis(){
+    public ObjectInputStream getOis() {
         return this.ois;
     }
+
 }

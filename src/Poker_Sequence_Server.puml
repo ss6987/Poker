@@ -1,0 +1,34 @@
+@startuml
+
+participant PokerServer
+participant PlayerType
+participant HandType
+participant DeckType
+participant CardType
+
+PokerServer -> DeckType : <作成>
+loop 重複しないカードが52枚になるまで
+DeckType -> CardType : <作成>
+end
+loop プレイヤーの数だけ繰り返す
+[-> PokerServer :プレイヤーの追加
+PokerServer -> PlayerType : <作成>
+PlayerType -> HandType : <作成>
+HandType -> DeckType : drawCard
+DeckType -> HandType : 手札
+HandType -> PlayerType :手札
+PlayerType -> PokerServer :手札
+PokerServer ->[ :手札
+end
+loop プレイヤーの数だけ繰り返す
+[-> PokerServer : RequestType
+PokerServer -> PlayerType : RequestType
+PlayerType -> HandType : RequestType
+HandType -> DeckType : DrawCard実行
+DeckType -> HandType : CardType
+HandType -> PlayerType : 交換後の手札
+PlayerType -> PokerServer : 交換後の手札
+PokerServer->[ : 交換後の手札
+end
+PokerServer ->[ : 最終結果送信
+@enduml

@@ -1,33 +1,30 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by SS on 2016/12/05.
  */
-public class RequestType {
-    private boolean changeNumber[] = new boolean[5];
+public class RequestType implements Serializable {
+    private boolean[] changeNumber = new boolean[5];
 
-    public RequestType(int[] RequestTumber){
-        for(int i=0;i < RequestTumber.length;i++){
-            changeNumber[RequestTumber[i]] = true;
+    public RequestType(boolean[] requestNumber) {
+        for (int handNumber = 0; handNumber < requestNumber.length; handNumber++) {
+            this.changeNumber[handNumber] = requestNumber[handNumber];
         }
     }
 
-    public boolean[] getRequestNumber(){
-        return this.changeNumber;
-    }
-
-    public int[] getReplacementNumber(){
-        ArrayList<Integer> true_list = new ArrayList<Integer>();
-        int[] return_list;
-        for(int i = 0;i < this.changeNumber.length;i++){
-            if(changeNumber[i] == true){
-                true_list.add(i);
+    public int[] getReplacementNumber() {
+        ArrayList<Integer> trueList = new ArrayList<>();
+        int[] returnList;
+        for (int handNumber = 0; handNumber < this.changeNumber.length; handNumber++) {
+            if (changeNumber[handNumber] == true) {
+                trueList.add(handNumber);
             }
         }
-        return_list = new int[true_list.size()];
-        for(int j = 0;j < return_list.length;j++){
-            return_list[j] = true_list.get(j);
+        returnList = new int[trueList.size()];
+        for (int cardNumber = 0; cardNumber < returnList.length; cardNumber++) {
+            returnList[cardNumber] = trueList.get(cardNumber);
         }
-        return return_list;
+        return returnList;
     }
 }
